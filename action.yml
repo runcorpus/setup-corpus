@@ -1,0 +1,21 @@
+name: Setup Corpus
+description: Install the Corpus CLI, add it to PATH, and start the daemon.
+
+inputs:
+  corpus-version:
+    description: Corpus version to install, or latest for the latest stable release.
+    required: false
+    default: latest
+
+runs:
+  using: composite
+  steps:
+    - name: Install Corpus
+      shell: bash
+      env:
+        CORPUS_VERSION: ${{ inputs.corpus-version }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/install.sh"
+
+    - name: Start Corpus daemon
+      shell: bash
+      run: corpus daemon start
